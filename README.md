@@ -49,7 +49,7 @@ flowchart LR
 ## How it was evaluated
 
 - **Bench.** Each deck has talk scripts in three styles: reading the slide in order, jumping around, and referring to things by meaning ("that quote"). Every sentence is labelled with the element it is about. A TTS voice speaks the scripts, and the audio goes through speech-to-text and the pointer on an audio clock, faster than real time. The scores are steps lit, wrong highlights, flicker and how late each highlight comes.
-- **Held-out decks.** Seven public talks were downloaded and frozen before testing: from NASA, the CDC, the US Federal Highway Administration, KU Leuven, ZBW, CESSDA and King's College London. Nobody opened their slides during development. They were scored with the shipped settings, without tuning.
+- **Held-out decks.** Seven public decks were downloaded and frozen before testing: from NASA, the CDC, the US Federal Highway Administration, KU Leuven, ZBW, CESSDA and King's College London. Nobody opened their slides during development. They were scored with the shipped settings, without tuning.
 - **Tune on some talks, check on others.** Settings are chosen on tuning talks and then checked on talks that were held back. Three changes that looked good on the tuning talks failed the held-out talks, so they were shipped switched off.
 
 ## Results
