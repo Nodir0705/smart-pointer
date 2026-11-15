@@ -17,19 +17,21 @@ Personal project, May to November 2026. Python, speech-to-text, small transforme
 ```mermaid
 flowchart LR
     subgraph PREP[Prepare, once per deck]
+        direction TB
         A[pptx] --> B[Parse shapes, text,<br>tables, charts, equations]
         B --> C[Render slides<br>exact text boxes<br>from the PDF layer]
         C --> D[Read text in pictures<br>link pictures to text]
         D --> E[Slide map<br>units, roles,<br>what a presenter says]
     end
     subgraph LIVE[Live, offline, CPU]
+        direction TB
         M[Microphone] --> S[Speech-to-text]
         S --> K[Split into clauses]
         K --> R[Re-ranker scores each clause<br>against each unit]
         R --> P[Point and hold]
         P --> H[Highlight in the browser]
     end
-    E --> R
+    PREP -->|slide map| LIVE
 ```
 
 ### Prepare
@@ -52,6 +54,8 @@ flowchart LR
 
 ## Results
 
+Every pointer score below uses a synthetic (TTS) voice reading written scripts. None has been measured on a real presentation yet.
+
 | What was measured | Result |
 |---|---|
 | 7 unseen decks, 21 talks, 2,078 pointing steps, with slide maps | **77.3%** of steps lit, 2.4 wrong highlights per talk |
@@ -62,7 +66,7 @@ flowchart LR
 | Auto-follow over 33 continuous synthetic talks | 647 of 741 slide changes caught, 2 early jumps |
 | The project's own 7-slide test deck, hand-written script | 38 of 40 steps lit, 1 wrong highlight |
 
-Speech-to-text was chosen on a real voice: one recording of the author reading a known paragraph.
+Only the speech-to-text choice used a real voice: one recording of the author reading a known paragraph.
 
 | Model | Word error rate |
 |---|---|
@@ -84,6 +88,7 @@ Speech-to-text was chosen on a real voice: one recording of the author reading a
 ## Limitations
 
 - Every pointer score above uses a synthetic voice reading scripts written by AI agents (or by hand, for the test deck), and the agents also labelled the answers. Only the choice of speech-to-text used a real voice, one speaker. It has not yet been measured on a real presentation.
+- Every pointer score above was recorded with an earlier speech-to-text engine, and the unseen-deck scores with maps used slide maps written by Claude agents; Canary, now the default, has only been checked on six synthetic talks.
 - The delay from a spoken word to the highlight has not been measured on the live path.
 - The unseen-deck scores used maps written by Claude agents. The map writer built into the app scores a little lower on the deck compared (160 against 162 lit steps), and the local model lower again (148). Writing maps with Claude needs the network once, when the deck is prepared.
 - Slide titles and section slides are 30% of the misses, pictures with no usable text 15%, and "the second row" style references most of the rest.
